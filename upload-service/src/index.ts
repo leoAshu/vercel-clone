@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import simpleGit from 'simple-git'
-import path, { resolve } from 'path'
+import { resolve } from 'path'
 
 import { cfg, generateUID, getAllFiles } from './utils'
 
