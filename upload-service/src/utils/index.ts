@@ -1,4 +1,5 @@
 import cfg from './cfg'
+import fs from 'fs'
 
 const generateUID = () => {
     let id = ''
@@ -10,4 +11,17 @@ const generateUID = () => {
     return id
 }
 
-export { cfg, generateUID }
+const getAllFiles = (folderPath: string) => {
+    try {
+        const allFilesAndFolders = fs.readdirSync(folderPath)
+        allFilesAndFolders.forEach((file) => {
+            console.log(file)
+        })
+        return allFilesAndFolders
+    } catch (err) {
+        console.log(err)
+        return []
+    }
+}
+
+export { cfg, generateUID, getAllFiles }
