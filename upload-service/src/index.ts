@@ -20,8 +20,12 @@ app.get('/:id', (req, res) => {
 app.post('/deploy', async (req, res) => {
     const uid = generateUID()
     const repoUrl = req.body.repoUrl
+    const outPath = resolve(__dirname, 'output', uid)
 
-    await simpleGit().clone(repoUrl, resolve(__dirname, 'output', uid))
+    await simpleGit().clone(repoUrl, outPath)
+
+    const files = getAllFiles(outPath)
+    files.forEach((file) => {})
 
     res.status(200).json({ uid })
 })

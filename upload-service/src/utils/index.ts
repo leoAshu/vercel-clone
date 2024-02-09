@@ -1,5 +1,6 @@
 import cfg from './cfg'
 import fs from 'fs'
+import { resolve } from 'path'
 
 const generateUID = () => {
     let id = ''
@@ -12,12 +13,21 @@ const generateUID = () => {
 }
 
 const getAllFiles = (folderPath: string) => {
+    let allFiles: string[] = []
+
     try {
         const allFilesAndFolders = fs.readdirSync(folderPath)
+
         allFilesAndFolders.forEach((file) => {
-            console.log(file)
+            const fullFilePath = resolve(folderPath, file)
+            if (fs.statSync(fullFilePath).isDirectory()) {
+                allFiles = allFiles.concat(getAllFiles(fullFilePath))
+            } else {
+                allFiles.push(fullFilePath)
+            }
         })
-        return allFilesAndFolders
+
+        return allFiles
     } catch (err) {
         console.log(err)
         return []
