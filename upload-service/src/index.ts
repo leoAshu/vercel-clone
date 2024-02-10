@@ -15,12 +15,6 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-app.get('/', (req, res) => {
-    const outPath = resolve(__dirname, cfg.R2_ROOT_FOLDER, 'icoju')
-    const files = getAllFiles(outPath)
-    res.status(200).json({ files })
-})
-
 app.post('/deploy', async (req, res) => {
     const uid = generateUID()
     const repoUrl = req.body.repoUrl
