@@ -1,0 +1,14 @@
+{
+    "name": "deployment-service",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build": "npx tsc -b",
+        "start": "npm run build && node dist",
+        "format": "npx prettier --write ."
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}
