@@ -1,5 +1,5 @@
 import { commandOptions, createClient } from 'redis'
-import { buildProject, downloadS3Folder, cfg } from './utils'
+import { buildProject, downloadS3Folder, cfg, copyFinalDist } from './utils'
 
 const subscriber = createClient()
 subscriber.connect()
@@ -17,6 +17,8 @@ const main = async () => {
         await downloadS3Folder(`${cfg.R2_ROOT_FOLDER}/${uid}`)
 
         await buildProject(uid || '')
+
+        await copyFinalDist(uid || '')
     }
 }
 

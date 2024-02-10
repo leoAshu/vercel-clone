@@ -48,4 +48,15 @@ const downloadS3Folder = async (prefix: string) => {
     await Promise.all(allPromises?.filter((x) => x !== undefined))
 }
 
-export { downloadS3Folder }
+const uploadFile = async (fileName: string, localFilePath: string) => {
+    const fileContent = fs.readFileSync(localFilePath)
+    await s3
+        .upload({
+            Body: fileContent,
+            Bucket: cfg.R2_BUCKET,
+            Key: fileName,
+        })
+        .promise()
+}
+
+export { downloadS3Folder, uploadFile }
