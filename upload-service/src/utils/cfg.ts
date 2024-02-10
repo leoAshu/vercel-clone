@@ -11,6 +11,8 @@ const cfg = {
     R2_ID: process.env.R2_ID,
     R2_SECRET: process.env.R2_SECRET,
     R2_ENDPOINT: process.env.R2_ENDPOINT,
+
+    REDIS_KEY: process.env.REDIS_KEY || 'build-queue',
 }
 
 export default cfg

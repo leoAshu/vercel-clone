@@ -27,7 +27,7 @@ app.post('/deploy', async (req, res) => {
         await uploadFile(file.slice(__dirname.length + 1), file)
     })
 
-    publisher.lPush('build-queue', uid)
+    publisher.lPush(cfg.REDIS_KEY, uid)
 
     res.status(200).json({ uid })
 })
