@@ -10,6 +10,9 @@ import { cfg, generateUID, getAllFiles, uploadFile } from './utils'
 const publisher = createClient()
 publisher.connect()
 
+const subscriber = createClient()
+subscriber.connect()
+
 const app = express()
 
 app.use(cors())
@@ -28,8 +31,18 @@ app.post('/deploy', async (req, res) => {
     })
 
     publisher.lPush(cfg.REDIS_KEY, uid)
+    publisher.hSet(cfg.REDIS_DB_KEY, uid, 0)
 
     res.status(200).json({ uid })
+})
+
+app.get('/status', async (req, res) => {
+    const id = req.query.id
+    const response = await subscriber.hGet(cfg.REDIS_DB_KEY, id as string)
+
+    res.json({
+        status: response,
+    })
 })
 
 app.listen(cfg.PORT)

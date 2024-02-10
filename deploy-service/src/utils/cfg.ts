@@ -3,6 +3,7 @@ dotenv.config()
 
 const cfg = {
     REDIS_KEY: process.env.REDIS_KEY || 'build-queue',
+    REDIS_DB_KEY: process.env.REDIS_DB_KEY || 'status',
 
     R2_ROOT_FOLDER: process.env.R2_ROOT_FOLDER || 'output',
     R2_BUCKET: process.env.R2_BUCKET || '',
