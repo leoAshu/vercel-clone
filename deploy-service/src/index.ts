@@ -1,6 +1,5 @@
 import { commandOptions, createClient } from 'redis'
-import { downloadS3Folder } from './utils/aws'
-import cfg from './utils/cfg'
+import { buildProject, downloadS3Folder, cfg } from './utils'
 
 const subscriber = createClient()
 subscriber.connect()
@@ -14,7 +13,10 @@ const main = async () => {
         )
 
         const uid = response?.element
+
         await downloadS3Folder(`${cfg.R2_ROOT_FOLDER}/${uid}`)
+
+        await buildProject(uid || '')
     }
 }
 
