@@ -1,6 +1,7 @@
 import cfg from './cfg'
 import fs from 'fs'
-import { resolve } from 'path'
+import { resolve, normalize } from 'path'
+import { uploadFile } from './aws'
 
 const generateUID = () => {
     let id = ''
@@ -19,10 +20,12 @@ const getAllFiles = (folderPath: string) => {
         const allFilesAndFolders = fs.readdirSync(folderPath)
 
         allFilesAndFolders.forEach((file) => {
-            const fullFilePath = resolve(folderPath, file)
+            let fullFilePath = resolve(folderPath, file)
             if (fs.statSync(fullFilePath).isDirectory()) {
                 allFiles = allFiles.concat(getAllFiles(fullFilePath))
             } else {
+                fullFilePath = normalize(fullFilePath)
+                fullFilePath = fullFilePath.replace(/\\/g, '/')
                 allFiles.push(fullFilePath)
             }
         })
@@ -34,4 +37,4 @@ const getAllFiles = (folderPath: string) => {
     }
 }
 
-export { cfg, generateUID, getAllFiles }
+export { cfg, generateUID, getAllFiles, uploadFile }
