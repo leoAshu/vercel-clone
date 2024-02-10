@@ -14,5 +14,9 @@
     "dependencies": {
         "aws-sdk": "^2.1555.0",
         "redis": "^4.6.13"
+    },
+    "devDependencies": {
+        "@types/node": "^20.11.17",
+        "dotenv": "^16.4.1"
     }
 }
