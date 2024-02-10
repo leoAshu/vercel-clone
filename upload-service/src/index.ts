@@ -2,8 +2,13 @@ import express from 'express'
 import cors from 'cors'
 import simpleGit from 'simple-git'
 import { resolve } from 'path'
+import { createClient } from 'redis'
 
 import { cfg, generateUID, getAllFiles, uploadFile } from './utils'
+
+// Redis Client
+const publisher = createClient()
+publisher.connect()
 
 const app = express()
 
@@ -27,6 +32,8 @@ app.post('/deploy', async (req, res) => {
     files.forEach(async (file) => {
         await uploadFile(file.slice(__dirname.length + 1), file)
     })
+
+    publisher.lPush('build-queue', uid)
 
     res.status(200).json({ uid })
 })
